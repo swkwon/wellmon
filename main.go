@@ -78,6 +78,11 @@ func noti(URL, title string) {
 }
 
 func check(URL string) bool {
+	now := date.GetSeoulTime()
+	if now.Hour() < 9 || now.Hour() > 17 {
+		return true
+	}
+
 	v := date.Load(URL)
 	if v == "" {
 		return false
@@ -86,11 +91,6 @@ func check(URL string) bool {
 	t, e := time.Parse(time.RFC3339, v)
 	if e != nil {
 		return false
-	}
-
-	now := date.GetSeoulTime()
-	if now.Hour() < 9 || now.Hour() > 17 {
-		return true
 	}
 
 	if now.Year() == t.Year() &&
