@@ -89,6 +89,10 @@ func check(URL string) bool {
 	}
 
 	now := date.GetSeoulTime()
+	if now.Hour() < 9 || now.Hour() > 18 {
+		return true
+	}
+
 	if now.Year() == t.Year() &&
 		now.Month() == t.Month() &&
 		now.Day() == t.Day() &&
