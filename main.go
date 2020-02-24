@@ -9,11 +9,18 @@ import (
 	"os"
 	"time"
 	"wellmon/date"
+	wmlog "wellmon/log"
 
 	"github.com/antchfx/htmlquery"
 )
 
 func getHTML(URL string) {
+	found := false
+	defer func() {
+		if found == false {
+			wmlog.DLog("button not found", URL)
+		}
+	}()
 	doc, err := htmlquery.LoadURL(URL)
 	if err != nil {
 		log.Fatal(err)
@@ -29,6 +36,7 @@ func getHTML(URL string) {
 			for _, t := range titles {
 				title := htmlquery.InnerText(t)
 				noti(URL, title)
+				found = true
 				return
 			}
 		}
@@ -99,10 +107,14 @@ func main() {
 		"http://www.welkeepsmall.com/shop/shopdetail.html?branduid=920693&xcode=023&mcode=001&scode=&type=X&sort=regdate&cur_code=023001&GfDT=aWp3Ug%3D%3D",
 	}
 
-	for _, v := range URLs {
-		if skip := check(v); skip == false {
-			getHTML(v)
-			time.Sleep(1 * time.Second)
+	for {
+		wmlog.DLog("main loop")
+		for _, v := range URLs {
+			if skip := check(v); skip == false {
+				getHTML(v)
+				time.Sleep(1 * time.Second)
+			}
 		}
+		time.Sleep(1 * time.Second)
 	}
 }
