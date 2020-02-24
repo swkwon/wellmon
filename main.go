@@ -121,7 +121,18 @@ func checkEnv() {
 	log.Println("check token... : ", processingPassword(os.Getenv("WK_TOKEN")))
 }
 
+var hour int
+
+func logPerHour() {
+	now := date.GetSeoulTime()
+	if hour != now.Hour() {
+		hour = now.Hour()
+		log.Println(now)
+	}
+}
+
 func main() {
+	hour = -1
 	log.Println("start wellmon...")
 	checkEnv()
 	URLs := []string{
@@ -132,7 +143,7 @@ func main() {
 	}
 
 	for {
-		wmlog.DLog("main loop")
+		logPerHour()
 		for _, v := range URLs {
 			if skip := check(v); skip == false {
 				getHTML(v)
