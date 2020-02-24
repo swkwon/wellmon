@@ -99,7 +99,7 @@ func check(URL string) bool {
 }
 
 func main() {
-
+	log.Println("start wellmon...")
 	URLs := []string{
 		"http://www.welkeepsmall.com/shop/shopdetail.html?branduid=1007206&xcode=023&mcode=001&scode=&type=X&sort=regdate&cur_code=023001&GfDT=bWV9",
 		"http://www.welkeepsmall.com/shop/shopdetail.html?branduid=1007205&xcode=023&mcode=001&scode=&type=X&sort=regdate&cur_code=023001&GfDT=a253UA%3D%3D",
