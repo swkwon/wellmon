@@ -100,6 +100,8 @@ func check(URL string) bool {
 
 func main() {
 	log.Println("start wellmon...")
+	log.Println("check channel... : ", os.Getenv("WK_CHANNEL"))
+	log.Println("check token... : ", os.Getenv("WK_TOKEN"))
 	URLs := []string{
 		"http://www.welkeepsmall.com/shop/shopdetail.html?branduid=1007206&xcode=023&mcode=001&scode=&type=X&sort=regdate&cur_code=023001&GfDT=bWV9",
 		"http://www.welkeepsmall.com/shop/shopdetail.html?branduid=1007205&xcode=023&mcode=001&scode=&type=X&sort=regdate&cur_code=023001&GfDT=a253UA%3D%3D",
