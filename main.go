@@ -32,6 +32,7 @@ func getHTML(URL string) {
 	}
 	for _, node := range nodes {
 		if "btn_buy fe" == htmlquery.InnerText(node) {
+			log.Println("!!! OPEN !!!", URL)
 			titles := htmlquery.Find(doc, "//title")
 			for _, t := range titles {
 				title := htmlquery.InnerText(t)
