@@ -110,13 +110,13 @@ func processingPassword(v string) string {
 	token := os.Getenv("WK_TOKEN")
 	if len(token) <= 0 {
 		return "no token"
-	} else {
-		var ret string
-		for i := 0; i < len(token); i++ {
-			ret = ret + "*"
-		}
-		return ret
 	}
+
+	var ret string
+	for i := 0; i < len(token); i++ {
+		ret = ret + "*"
+	}
+	return ret
 }
 
 func checkEnv() {
