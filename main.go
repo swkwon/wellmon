@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"runtime"
+	"sync"
 	"time"
 	"wellmon/date"
 	wmlog "wellmon/log"
@@ -131,9 +133,9 @@ func logPerHour() {
 	}
 }
 
-func main() {
+func do() {
 	hour = -1
-	log.Println("start wellmon...")
+	log.Println("do wellmon...")
 	checkEnv()
 	URLs := []string{
 		"http://www.welkeepsmall.com/shop/shopdetail.html?branduid=1007206&xcode=023&mcode=001&scode=&type=X&sort=regdate&cur_code=023001&GfDT=bWV9",
@@ -152,4 +154,31 @@ func main() {
 		}
 		time.Sleep(1 * time.Second)
 	}
+}
+
+func safeGo(f func()) {
+	go func() {
+		defer func() {
+			if err := recover(); err != nil {
+				stack := make([]byte, 1024*8)
+				stack = stack[:runtime.Stack(stack, false)]
+				stackstr := string(stack)
+
+				log.Println("recovered from panic")
+				log.Println(err)
+				log.Println(stackstr)
+				time.Sleep(1 * time.Second)
+				safeGo(f)
+			}
+		}()
+
+		f()
+	}()
+}
+
+func main() {
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	safeGo(do)
+	wg.Wait()
 }
