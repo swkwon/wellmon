@@ -25,7 +25,8 @@ func getHTML(URL string) {
 	}()
 	doc, err := htmlquery.LoadURL(URL)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
 
 	nodes := htmlquery.Find(doc, "//a/@class")
